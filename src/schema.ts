@@ -178,10 +178,19 @@ export type AssetFilter = {
 export type AssetLinkingCollections = {
   __typename?: 'AssetLinkingCollections';
   entryCollection?: Maybe<EntryCollection>;
+  recipeCollection?: Maybe<RecipeCollection>;
 };
 
 
 export type AssetLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  locale?: InputMaybe<Scalars['String']>;
+  preview?: InputMaybe<Scalars['Boolean']>;
+  skip?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type AssetLinkingCollectionsRecipeCollectionArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   locale?: InputMaybe<Scalars['String']>;
   preview?: InputMaybe<Scalars['Boolean']>;
@@ -732,6 +741,7 @@ export type Recipe = Entry & {
   contentfulMetadata: ContentfulMetadata;
   description?: Maybe<RecipeDescription>;
   equipment?: Maybe<Array<Maybe<Scalars['String']>>>;
+  image?: Maybe<Asset>;
   ingredientsCollection?: Maybe<RecipeIngredientsCollection>;
   instructionsCollection?: Maybe<RecipeInstructionsCollection>;
   linkedFrom?: Maybe<RecipeLinkingCollections>;
@@ -758,6 +768,13 @@ export type RecipeDescriptionArgs = {
 /** This is a full recipe with ingredients, equipment, and directions. [See type definition](https://app.contentful.com/spaces/fo9qwg6zarbt/content_types/recipe) */
 export type RecipeEquipmentArgs = {
   locale?: InputMaybe<Scalars['String']>;
+};
+
+
+/** This is a full recipe with ingredients, equipment, and directions. [See type definition](https://app.contentful.com/spaces/fo9qwg6zarbt/content_types/recipe) */
+export type RecipeImageArgs = {
+  locale?: InputMaybe<Scalars['String']>;
+  preview?: InputMaybe<Scalars['Boolean']>;
 };
 
 
@@ -862,6 +879,7 @@ export type RecipeFilter = {
   equipment_contains_none?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   equipment_contains_some?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   equipment_exists?: InputMaybe<Scalars['Boolean']>;
+  image_exists?: InputMaybe<Scalars['Boolean']>;
   ingredientsCollection_exists?: InputMaybe<Scalars['Boolean']>;
   instructionsCollection_exists?: InputMaybe<Scalars['Boolean']>;
   notes_contains_all?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;

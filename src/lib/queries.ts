@@ -1,38 +1,57 @@
 const tags = `
-  items {
-    ... on Tag {
-    title
-    slug
+  tagsCollection(limit: 10) {
+    items {
+      ... on Tag {
+      title
+      slug
+      }
     }
   }
 `;
 
 const instructions = `
-  items {
-    ... on InstructionSection {
-      sys {
-      id
+  instructionsCollection(limit: 10) {
+    items {
+      ... on InstructionSection {
+        sys {
+        id
+        }
+        title
+        slug
+        label
+        instructionList
       }
-      title
-      slug
-      label
-      instructionList
     }
   }
 `;
 
 const ingredients = `
-  items {
-    ... on IngredientSection {
-      sys {
-      id
+  ingredientsCollection(limit: 10) {
+    items {
+      ... on IngredientSection {
+        sys {
+        id
+        }
+        title
+        slug
+        label
+        ingredientList
       }
-      title
-      slug
-      label
-      ingredientList
-    }
-  }       
+    }       
+  }
+`;
+
+const image = `
+  image {
+    title
+    description
+    contentType
+    fileName
+    size
+    url
+    height
+    width
+  }
 `;
 
 const recipe = `
@@ -46,17 +65,12 @@ const recipe = `
     json
   }
   abstract
-  ingredientsCollection(limit: 10) {
-    ${ingredients}
-  }
+  ${image}
+  ${ingredients}
   equipment
-  instructionsCollection(limit: 10) {
-    ${instructions}
-  }
+  ${instructions}  
   notes
-  tagsCollection(limit: 10) {
-    ${tags}
-  }
+  ${tags}
 `;
 
 export const homeQuery = () => {
@@ -111,43 +125,45 @@ export const recipeQuery = ({ slug }: RecipeQueryProps) => {
 };
 
 const taxonomyGrandChildren = `
-  items {
-    ... on Tag {
-      sys {
-        id
+  childrenCollection {
+    items {
+      ... on Tag {
+        sys {
+          id
+        }
+        title
+        slug
       }
-      title
-      slug
-    }
-    ... on Taxonomy {
-      sys {
-        id
+      ... on Taxonomy {
+        sys {
+          id
+        }
+        title
+        slug
       }
-      title
-      slug
     }
   }
 `;
 
 const taxonomyChildren = `
-  items {
-    ... on Tag {
-      sys {
-        id
+  childrenCollection {
+    items {
+      ... on Tag {
+        sys {
+          id
+        }
+        title
+        slug
       }
-      title
-      slug
-    }
-    ... on Taxonomy {
-      sys {
-        id
-      }
-      title
-      slug
-      childrenCollection {
+      ... on Taxonomy {
+        sys {
+          id
+        }
+        title
+        slug
         ${taxonomyGrandChildren}
       }
-    }
+    } 
   }
 `;
 
@@ -165,9 +181,7 @@ export const taxonomyQuery = ({ taxonomy }: TaxonomyQueryProps) => {
           }
           title
           slug
-          childrenCollection {
-            ${taxonomyChildren}
-          }
+          ${taxonomyChildren}
         }
       }
     }
