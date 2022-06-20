@@ -21,7 +21,7 @@ const HomePage = () => {
   return (
     <Container className="main" component="main">
       <Typography variant="h1">All My Recipes</Typography>
-      <Typography variant="subtitle1" gutterBottom>
+      <Typography variant="subtitle1" component="h2" gutterBottom>
         {recipes.length} Total
       </Typography>
 

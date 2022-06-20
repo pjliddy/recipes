@@ -68,7 +68,7 @@ const RecipeCard = ({ recipe }: RecipeCardProps) => {
         {image && (
           <CardMedia
             component="img"
-            image={`${src}?w=${imgSizes.width[size]}&h=${imgSizes.height[size]}`}
+            image={`${src}?w=${imgSizes.width[size]}&h=${imgSizes.height[size]}&fm=webp`}
             width="372"
             height="279"
             alt={alt}
