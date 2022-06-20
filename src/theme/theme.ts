@@ -13,7 +13,7 @@ const baseTheme: ThemeOptions = {
     },
   },
   typography: {
-    fontFamily: 'Roboto',
+    fontFamily: 'Inter',
     fontSize: 16,
     fontWeightRegular: 400,
     fontWeightBold: 500,

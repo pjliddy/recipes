@@ -53,7 +53,7 @@
     "build": "npm run gen && react-scripts build",
     "predeploy": "react-scripts build",
     "deploy": "dotenv -- cross-var aws s3 sync --acl public-read build/ %S3_BUCKET%",
-    "postdeploy": "dotenv -- cross-var aws cloudfront create-invalidation --distribution-id %DISTRIBUTION_ID% --paths '/*' --no-cli-pager",
+    "postdeploy": "dotenv -- cross-var aws cloudfront create-invalidation --distribution-id %DISTRIBUTION_ID% --paths '/*'",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
