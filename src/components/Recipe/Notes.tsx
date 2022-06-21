@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import { Maybe, Scalars } from '../schema';
+import { Maybe, Scalars } from '../../schema';
 
 type NotesProps = {
   notes?: Maybe<Array<Maybe<Scalars['String']>>>;

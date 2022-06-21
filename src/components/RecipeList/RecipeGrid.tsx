@@ -1,9 +1,9 @@
 import Grid from '@mui/material/Grid';
 
-import Loading from './Loading';
+import Loading from '../Loading';
 import RecipeCard from './RecipeCard';
 
-import { Recipe } from '../schema';
+import { Recipe } from '../../schema';
 
 type RecipeGridProps = {
   recipes: Recipe[];

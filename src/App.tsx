@@ -14,7 +14,7 @@ import { getTaxonomy } from './lib/content';
 
 // lazy load view components and assign webpack chunk names
 const NavBar = lazy(
-  () => import(/* webpackChunkName: 'navbar' */ './components/NavBar')
+  () => import(/* webpackChunkName: 'navbar' */ './components/NavBar/NavBar')
 );
 
 const HomePage = lazy(

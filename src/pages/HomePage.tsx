@@ -4,7 +4,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
 import Loading from '../components/Loading';
-import RecipeGrid from '../components/RecipeGrid';
+import RecipeGrid from '../components/RecipeList/RecipeGrid';
 
 import { Recipe } from '../schema';
 import { getHomeRecipes } from '../lib/content';

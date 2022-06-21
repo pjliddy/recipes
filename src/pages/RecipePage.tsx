@@ -12,11 +12,11 @@ import Typography from '@mui/material/Typography';
 // TODO: componentize
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-import Equipment from '../components/Equipment';
-import Ingredients from '../components/Ingredients';
-import Instructions from '../components/Instructions';
-import Notes from '../components/Notes';
-import Tags from '../components/Tags';
+import Equipment from '../components/Recipe/Equipment';
+import Ingredients from '../components/Recipe/Ingredients';
+import Instructions from '../components/Recipe/Instructions';
+import Notes from '../components/Recipe/Notes';
+import Tags from '../components/Recipe/Tags';
 
 import Loading from '../components/Loading';
 

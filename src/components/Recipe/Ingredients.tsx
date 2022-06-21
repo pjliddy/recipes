@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import RestaurantMenuIcon from '@mui/icons-material/RestaurantMenu';
 
-import { RecipeIngredientsCollection, IngredientSection } from '../schema';
+import { RecipeIngredientsCollection, IngredientSection } from '../../schema';
 
 type IngredientsProps = {
   collection?: RecipeIngredientsCollection;
