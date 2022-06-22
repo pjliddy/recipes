@@ -59,7 +59,8 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
     "format": "npm run lint:fix",
-    "serve": "npm run build && serve -s build"
+    "serve": "npm run build && serve -s build",
+    "typecheck": "tsc --noEmit"
   },
   "eslintConfig": {
     "extends": [

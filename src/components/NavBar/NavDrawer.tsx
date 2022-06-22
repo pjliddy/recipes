@@ -10,36 +10,33 @@ import ListItemText from '@mui/material/ListItemText';
 
 import { Maybe, Taxonomy } from '../../schema';
 
-const drawerWidth = 240;
-
 const styles = {
   drawer: {
     display: 'block',
     '& .MuiDrawer-paper': {
       boxSizing: 'border-box',
-      width: drawerWidth,
+      width: 240,
     },
   },
 };
 
 type NavDrawerType = {
+  isOpen: boolean;
   nav: Maybe<Taxonomy>[];
   onClick: VoidFunction;
-  onClose: VoidFunction;
-  isOpen: boolean;
 };
 
-const NavDrawer = ({ isOpen, nav, onClick, onClose }: NavDrawerType) => (
+const NavDrawer = ({ isOpen, nav, onClick }: NavDrawerType) => (
   <Box component="nav">
     <Drawer
       anchor="right"
       ModalProps={{
         keepMounted: true, // Better open performance on mobile.
       }}
-      onClose={onClose}
+      onClose={onClick}
       open={isOpen}
-      variant="temporary"
       sx={styles.drawer}
+      variant="temporary"
     >
       <Box onClick={onClick}>
         <List>
@@ -52,7 +49,7 @@ const NavDrawer = ({ isOpen, nav, onClick, onClose }: NavDrawerType) => (
           <Divider />
 
           {nav.map((item) => {
-            const { slug, title, linkedFrom } = item ?? {};
+            const { linkedFrom, slug, title } = item ?? {};
 
             console.log({ item, linkedFrom });
 
