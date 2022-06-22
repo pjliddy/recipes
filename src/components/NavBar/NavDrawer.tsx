@@ -52,7 +52,12 @@ const NavDrawer = ({ isOpen, nav, onClick, onClose }: NavDrawerType) => (
           <Divider />
 
           {nav.map((item) => {
-            const { slug, title } = item ?? {};
+            const { slug, title, linkedFrom } = item ?? {};
+
+            console.log({ item, linkedFrom });
+
+            // TODO: update content moded to use Tag as top level for taxonomy,
+            // so that linkedFrom has values (i.e., Meat as Category is not linkedFrom any recipe)
 
             return (
               <ListItem key={slug} disablePadding>

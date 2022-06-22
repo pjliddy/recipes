@@ -125,9 +125,18 @@ export const recipeQuery = ({ slug }: RecipeQueryProps) => {
 };
 
 const taxonomyGrandChildren = `
-  childrenCollection {
+  childrenCollection(limit: 12) {
     items {
       ... on Tag {
+        linkedFrom {
+          recipeCollection(limit: 12) {
+            total
+            items {
+              title
+              slug
+            }
+          }
+        }
         sys {
           id
         }
@@ -146,9 +155,18 @@ const taxonomyGrandChildren = `
 `;
 
 const taxonomyChildren = `
-  childrenCollection {
+  childrenCollection(limit: 12) {
     items {
       ... on Tag {
+        linkedFrom {
+          recipeCollection(limit: 12) {
+            total
+            items {
+              title
+              slug
+            }
+          }
+        }
         sys {
           id
         }
@@ -163,7 +181,7 @@ const taxonomyChildren = `
         slug
         ${taxonomyGrandChildren}
       }
-    } 
+    }
   }
 `;
 
@@ -183,7 +201,7 @@ export const taxonomyQuery = ({ taxonomy }: TaxonomyQueryProps) => {
           slug
           ${taxonomyChildren}
         }
-      }
+      }    
     }
   `;
 };
