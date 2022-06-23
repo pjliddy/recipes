@@ -126,14 +126,17 @@ export const recipeQuery = ({ slug }: RecipeQueryProps) => {
 
 const taxonomyGrandChildren = `
   childrenCollection(limit: 12) {
+    total
     items {
       ... on Tag {
         linkedFrom {
           recipeCollection(limit: 12) {
             total
             items {
-              title
-              slug
+              ... on Recipe {
+                title
+                slug
+              }
             }
           }
         }
@@ -149,21 +152,42 @@ const taxonomyGrandChildren = `
         }
         title
         slug
+        tag {
+          linkedFrom {
+            recipeCollection(limit: 12) {
+              total
+              items {
+                ... on Recipe {
+                  title
+                  slug
+                }
+              }
+            }
+          }
+          sys {
+            id
+          }
+          title
+          slug
+        }
       }
     }
   }
 `;
 
 const taxonomyChildren = `
-  childrenCollection(limit: 12) {
+  childrenCollection {
+    total
     items {
       ... on Tag {
         linkedFrom {
           recipeCollection(limit: 12) {
             total
             items {
-              title
-              slug
+              ... on Recipe {
+                title
+                slug
+              }
             }
           }
         }
@@ -179,6 +203,24 @@ const taxonomyChildren = `
         }
         title
         slug
+        tag {
+          linkedFrom {
+            recipeCollection(limit: 12) {
+              total
+              items {
+                ... on Recipe {
+                  title
+                  slug
+                }
+              }
+            }
+          }
+          sys {
+            id
+          }
+          title
+          slug
+        }
         ${taxonomyGrandChildren}
       }
     }
@@ -194,14 +236,122 @@ export const taxonomyQuery = ({ taxonomy }: TaxonomyQueryProps) => {
     {
       taxonomyCollection(where: { title: "${taxonomy}" }, limit: 1) {
         items {
+          __typename
           sys {
             id
           }
           title
           slug
-          ${taxonomyChildren}
+          tag {
+            sys {
+              id
+            }
+            title
+            slug
+          }
+          childrenCollection(limit: 24) {
+            total
+            items {
+              ... on Tag {
+                __typename
+                sys {
+                  id
+                }
+                title
+                slug
+                linkedFrom {
+                  recipeCollection(limit: 12){
+                    total
+                    items {
+                      ... on Recipe {
+                        __typename
+                        sys {
+                          id
+                        }
+                        title
+                        slug
+                      }
+                    }
+                  }
+                }
+              }
+              ... on Taxonomy {
+                __typename
+                sys {
+                  id
+                }
+                title
+                slug
+                tag {
+                  sys {
+                    id
+                  }
+                  title
+                  slug
+                  linkedFrom {
+                    recipeCollection(limit: 12) {
+                      total
+                      items {
+                        ... on Recipe {
+                          __typename
+                          sys {
+                            id
+                          }
+                          title
+                          slug
+                        }
+                      }
+                    }
+                  }
+                }
+                childrenCollection(limit: 12) {
+                  total
+                  items {
+                    ... on Tag {
+                      __typename
+                      sys {
+                        id
+                      }
+                      title
+                      slug
+                      linkedFrom {
+                        recipeCollection(limit: 12) {
+                          total
+                          items {
+                            ... on Recipe {
+                              __typename
+                              sys {
+                                id
+                              }
+                              title
+                              slug
+                            }
+                          }
+                        }
+                      }
+                    }
+                    ... on Taxonomy {
+                      __typename
+                      sys {
+                        id
+                      }
+                      title
+                      slug
+                      tag {
+                        sys {
+                          id
+                        }
+                        title
+                        slug
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
         }
-      }    
+      }
     }
   `;
 };

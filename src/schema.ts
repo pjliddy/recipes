@@ -1116,6 +1116,7 @@ export type Taxonomy = Entry & {
   linkedFrom?: Maybe<TaxonomyLinkingCollections>;
   slug?: Maybe<Scalars['String']>;
   sys: Sys;
+  tag?: Maybe<Tag>;
   title?: Maybe<Scalars['String']>;
 };
 
@@ -1138,6 +1139,13 @@ export type TaxonomyLinkedFromArgs = {
 /** This is a structured collection of tags with a title [See type definition](https://app.contentful.com/spaces/fo9qwg6zarbt/content_types/taxonomy) */
 export type TaxonomySlugArgs = {
   locale?: InputMaybe<Scalars['String']>;
+};
+
+
+/** This is a structured collection of tags with a title [See type definition](https://app.contentful.com/spaces/fo9qwg6zarbt/content_types/taxonomy) */
+export type TaxonomyTagArgs = {
+  locale?: InputMaybe<Scalars['String']>;
+  preview?: InputMaybe<Scalars['Boolean']>;
 };
 
 
@@ -1177,6 +1185,8 @@ export type TaxonomyFilter = {
   slug_not_contains?: InputMaybe<Scalars['String']>;
   slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   sys?: InputMaybe<SysFilter>;
+  tag?: InputMaybe<CfTagNestedFilter>;
+  tag_exists?: InputMaybe<Scalars['Boolean']>;
   title?: InputMaybe<Scalars['String']>;
   title_contains?: InputMaybe<Scalars['String']>;
   title_exists?: InputMaybe<Scalars['Boolean']>;
@@ -1222,3 +1232,24 @@ export enum TaxonomyOrder {
   TitleAsc = 'title_ASC',
   TitleDesc = 'title_DESC'
 }
+
+export type CfTagNestedFilter = {
+  AND?: InputMaybe<Array<InputMaybe<CfTagNestedFilter>>>;
+  OR?: InputMaybe<Array<InputMaybe<CfTagNestedFilter>>>;
+  contentfulMetadata?: InputMaybe<ContentfulMetadataFilter>;
+  slug?: InputMaybe<Scalars['String']>;
+  slug_contains?: InputMaybe<Scalars['String']>;
+  slug_exists?: InputMaybe<Scalars['Boolean']>;
+  slug_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug_not?: InputMaybe<Scalars['String']>;
+  slug_not_contains?: InputMaybe<Scalars['String']>;
+  slug_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  sys?: InputMaybe<SysFilter>;
+  title?: InputMaybe<Scalars['String']>;
+  title_contains?: InputMaybe<Scalars['String']>;
+  title_exists?: InputMaybe<Scalars['Boolean']>;
+  title_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  title_not?: InputMaybe<Scalars['String']>;
+  title_not_contains?: InputMaybe<Scalars['String']>;
+  title_not_in?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+};

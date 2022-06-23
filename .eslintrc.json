@@ -11,8 +11,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
-  "ignorePatterns": ["/src/schema.ts"],
-  "ignorePath": ["/node_modules/**/*.*", "/build"],
+  "ignorePatterns": ["/src/schema.ts", "/node_modules/**/*.*", "/build"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
