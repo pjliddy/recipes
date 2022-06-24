@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -29,43 +28,38 @@ type NavDrawerType = {
 };
 
 const NavDrawer = ({ isOpen, nav, onClick }: NavDrawerType) => {
-  // console.log({ nav });
   return (
-    <Box component="nav">
-      <Drawer
-        anchor="right"
-        ModalProps={{
-          keepMounted: true, // Better open performance on mobile.
-        }}
-        onClose={onClick}
-        open={isOpen}
-        sx={styles.drawer}
-        variant="persistent"
-      >
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton component={Link} to="/" onClick={onClick}>
-              <ListItemText primary="All Recipes" />
-            </ListItemButton>
-          </ListItem>
+    <Drawer
+      anchor="right"
+      ModalProps={{
+        keepMounted: true, // Better open performance on mobile.
+      }}
+      onClose={onClick}
+      open={isOpen}
+      sx={styles.drawer}
+      variant="temporary"
+    >
+      <List component="nav">
+        <ListItem disablePadding>
+          <ListItemButton component={Link} to="/" onClick={onClick}>
+            <ListItemText primary="All Recipes" />
+          </ListItemButton>
+        </ListItem>
 
-          <Divider />
+        <Divider />
 
-          {nav?.map((node: Maybe<Taxonomy>) => {
-            const categoryTag = (node?.tag || node) as Tag;
-            const { linkedFrom } = categoryTag ?? {};
-            const { recipeCollection } = linkedFrom ?? {};
-            const { total: numRecipes } = recipeCollection ?? {};
+        {nav?.map((node: Maybe<Taxonomy>) => {
+          const categoryTag = (node?.tag || node) as Tag;
+          const { linkedFrom } = categoryTag ?? {};
+          const { recipeCollection } = linkedFrom ?? {};
+          const { total: numRecipes } = recipeCollection ?? {};
 
-            // console.log({ type }, { recipeCollection }, { numRecipes });
-
-            return numRecipes ? (
-              <CategoryMenu key={node?.sys?.id} node={node} onClick={onClick} />
-            ) : null;
-          })}
-        </List>
-      </Drawer>
-    </Box>
+          return numRecipes ? (
+            <CategoryMenu key={node?.sys?.id} node={node} onClick={onClick} />
+          ) : null;
+        })}
+      </List>
+    </Drawer>
   );
 };
 

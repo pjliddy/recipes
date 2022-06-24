@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 
 import LogoButton from './LogoButton';
@@ -24,16 +23,13 @@ const NavBar = ({ nav }: NavBarProps) => {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <AppBar component="nav">
-        <Toolbar>
-          <LogoButton />
-          <MenuButton onClick={handleDrawerToggle} />
-        </Toolbar>
-      </AppBar>
-
+    <AppBar component="nav">
+      <Toolbar>
+        <LogoButton />
+        <MenuButton onClick={handleDrawerToggle} />
+      </Toolbar>
       <NavDrawer nav={nav} onClick={handleDrawerToggle} isOpen={isDrawerOpen} />
-    </Box>
+    </AppBar>
   );
 };
 

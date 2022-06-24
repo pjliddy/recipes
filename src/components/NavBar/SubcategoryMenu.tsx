@@ -13,29 +13,25 @@ import CategoryListItemButton from './CategoryListItemButton';
 
 import { SxProps, Theme } from '@mui/material';
 
-import {
-  Maybe,
-  Tag,
-  TaxonomyChildrenCollection,
-  TaxonomyChildrenItem,
-} from '../../schema';
+import { Maybe, Tag, Taxonomy, TaxonomyChildrenItem } from '../../schema';
 
 type SubcategoryMenuProps = {
-  childrenCollection: TaxonomyChildrenCollection;
+  taxonomy: Maybe<Taxonomy>;
   itemStyle: SxProps<Theme> | undefined;
   onClick: VoidFunction;
-  slug: Maybe<string> | undefined;
-  title: Maybe<string> | undefined;
 };
 
 const SubcategoryMenu = ({
-  childrenCollection,
+  taxonomy,
   itemStyle,
   onClick,
-  slug,
-  title,
 }: SubcategoryMenuProps) => {
   const [open, setOpen] = useState(false);
+
+  const { childrenCollection, slug, title, tag } = taxonomy ?? {};
+  const { linkedFrom } = tag ?? {};
+  const { recipeCollection } = linkedFrom ?? {};
+  const { total } = recipeCollection ?? {};
 
   const toggleDropdown = () => {
     setOpen(!open);
@@ -51,7 +47,12 @@ const SubcategoryMenu = ({
           </IconButton>
         }
       >
-        <CategoryListItemButton slug={slug} title={title} onClick={onClick} />
+        <CategoryListItemButton
+          slug={slug}
+          title={title}
+          onClick={onClick}
+          total={total}
+        />
       </ListItem>
       <Collapse in={open} timeout="auto">
         <List component="div" disablePadding>
@@ -62,14 +63,15 @@ const SubcategoryMenu = ({
               const categoryTag = child as Tag;
               const { linkedFrom } = categoryTag ?? {};
               const { recipeCollection } = linkedFrom ?? {};
-              const { total: numRecipes } = recipeCollection ?? {};
+              const { total } = recipeCollection ?? {};
 
-              return numRecipes ? (
+              return total ? (
                 <ListItem key={id}>
                   <CategoryListItemButton
                     slug={slug}
                     title={title}
                     onClick={onClick}
+                    total={total}
                   />
                 </ListItem>
               ) : null;

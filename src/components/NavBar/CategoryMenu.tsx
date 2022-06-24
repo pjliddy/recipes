@@ -4,7 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import CategoryListItemButton from './CategoryListItemButton';
 import SubcategoryMenu from './SubcategoryMenu';
 
-import { Maybe, Taxonomy } from '../../schema';
+import { Maybe, TagLinkingCollections, Taxonomy } from '../../schema';
 
 const styles = {
   category: {
@@ -18,34 +18,32 @@ type CategoryMenuProps = {
 };
 
 const CategoryMenu = ({ node, onClick }: CategoryMenuProps) => {
-  const { childrenCollection, slug, title } = node ?? {};
-  // const { id } = sys ?? {};
+  const { childrenCollection, slug, tag, title } = node ?? {};
 
-  // const { linkedFrom: tagLinks } = tag ?? {};
-  // const { linkedFrom } = node ?? {};
-  // const nodeLinks = linkedFrom as Maybe<TagLinkingCollections>;
+  const { linkedFrom: tagLinks } = tag ?? {};
+  const { linkedFrom } = node ?? {};
+  const nodeLinks = linkedFrom as Maybe<TagLinkingCollections>;
 
-  // const recipeCollection =
-  //   tagLinks?.recipeCollection || nodeLinks?.recipeCollection;
+  const recipeCollection =
+    tagLinks?.recipeCollection || nodeLinks?.recipeCollection;
 
-  // const numRecipes = recipeCollection?.total;
-
-  // console.log(title, type);
-  // console.log({ title }, { id });
-
+  const numRecipes = recipeCollection?.total;
   return (
     <Box>
       {childrenCollection ? (
         <SubcategoryMenu
-          childrenCollection={childrenCollection}
+          taxonomy={node}
           itemStyle={styles.category}
           onClick={onClick}
-          slug={slug}
-          title={title}
         />
       ) : (
         <ListItem sx={styles.category}>
-          <CategoryListItemButton slug={slug} title={title} onClick={onClick} />
+          <CategoryListItemButton
+            slug={slug}
+            title={title}
+            onClick={onClick}
+            total={numRecipes}
+          />
         </ListItem>
       )}
     </Box>
