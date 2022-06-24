@@ -15,12 +15,12 @@ type NavBarProps = {
 };
 
 const NavBar = ({ nav }: NavBarProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   if (!nav) return null;
 
   const handleDrawerToggle = () => {
-    setIsOpen(!isOpen);
+    setIsDrawerOpen(!isDrawerOpen);
   };
 
   return (
@@ -32,7 +32,7 @@ const NavBar = ({ nav }: NavBarProps) => {
         </Toolbar>
       </AppBar>
 
-      <NavDrawer nav={nav} onClick={handleDrawerToggle} isOpen={isOpen} />
+      <NavDrawer nav={nav} onClick={handleDrawerToggle} isOpen={isDrawerOpen} />
     </Box>
   );
 };

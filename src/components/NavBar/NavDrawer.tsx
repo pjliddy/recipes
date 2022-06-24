@@ -8,7 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
-import CategoryMenuItem from './CategoryMenuItem';
+import CategoryMenu from './CategoryMenu';
 
 import { Maybe, Taxonomy } from '../../schema';
 
@@ -19,9 +19,6 @@ const styles = {
       boxSizing: 'border-box',
       width: 240,
     },
-  },
-  category: {
-    pl: 0,
   },
 };
 
@@ -43,7 +40,7 @@ const NavDrawer = ({ isOpen, nav, onClick }: NavDrawerType) => {
         onClose={onClick}
         open={isOpen}
         sx={styles.drawer}
-        variant="temporary"
+        variant="persistent"
       >
         <List>
           <ListItem disablePadding>
@@ -55,11 +52,7 @@ const NavDrawer = ({ isOpen, nav, onClick }: NavDrawerType) => {
           <Divider />
 
           {nav?.map((node: Maybe<Taxonomy>) => (
-            <CategoryMenuItem
-              key={node?.sys?.id}
-              node={node}
-              onClick={onClick}
-            />
+            <CategoryMenu key={node?.sys?.id} node={node} onClick={onClick} />
           ))}
         </List>
       </Drawer>

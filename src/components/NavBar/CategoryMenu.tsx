@@ -1,10 +1,7 @@
-import { Link } from 'react-router-dom';
-
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
 
+import CategoryListItemButton from './CategoryListItemButton';
 import SubcategoryMenu from './SubcategoryMenu';
 
 import { Maybe, Taxonomy } from '../../schema';
@@ -15,12 +12,12 @@ const styles = {
   },
 };
 
-type CategoryMenuItemProps = {
+type CategoryMenuProps = {
   node: Maybe<Taxonomy>;
   onClick: VoidFunction;
 };
 
-const CategoryMenuItem = ({ node, onClick }: CategoryMenuItemProps) => {
+const CategoryMenu = ({ node, onClick }: CategoryMenuProps) => {
   const { childrenCollection, slug, title } = node ?? {};
   // const { id } = sys ?? {};
 
@@ -35,28 +32,24 @@ const CategoryMenuItem = ({ node, onClick }: CategoryMenuItemProps) => {
 
   // console.log(title, type);
   // console.log({ title }, { id });
+
   return (
     <Box>
       {childrenCollection ? (
         <SubcategoryMenu
           childrenCollection={childrenCollection}
+          itemStyle={styles.category}
           onClick={onClick}
           slug={slug}
           title={title}
         />
       ) : (
         <ListItem sx={styles.category}>
-          <ListItemButton
-            component={Link}
-            to={`/category/${slug}`}
-            onClick={onClick}
-          >
-            <ListItemText primary={`${title}`} />
-          </ListItemButton>
+          <CategoryListItemButton slug={slug} title={title} onClick={onClick} />
         </ListItem>
       )}
     </Box>
   );
 };
 
-export default CategoryMenuItem;
+export default CategoryMenu;
