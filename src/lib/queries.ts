@@ -124,108 +124,108 @@ export const recipeQuery = ({ slug }: RecipeQueryProps) => {
   `;
 };
 
-const taxonomyGrandChildren = `
-  childrenCollection(limit: 12) {
-    total
-    items {
-      ... on Tag {
-        linkedFrom {
-          recipeCollection(limit: 12) {
-            total
-            items {
-              ... on Recipe {
-                title
-                slug
-              }
-            }
-          }
-        }
-        sys {
-          id
-        }
-        title
-        slug
-      }
-      ... on Taxonomy {
-        sys {
-          id
-        }
-        title
-        slug
-        tag {
-          linkedFrom {
-            recipeCollection(limit: 12) {
-              total
-              items {
-                ... on Recipe {
-                  title
-                  slug
-                }
-              }
-            }
-          }
-          sys {
-            id
-          }
-          title
-          slug
-        }
-      }
-    }
-  }
-`;
+// const taxonomyGrandChildren = `
+//   childrenCollection(limit: 12) {
+//     total
+//     items {
+//       ... on Tag {
+//         linkedFrom {
+//           recipeCollection(limit: 12) {
+//             total
+//             items {
+//               ... on Recipe {
+//                 title
+//                 slug
+//               }
+//             }
+//           }
+//         }
+//         sys {
+//           id
+//         }
+//         title
+//         slug
+//       }
+//       ... on Taxonomy {
+//         sys {
+//           id
+//         }
+//         title
+//         slug
+//         tag {
+//           linkedFrom {
+//             recipeCollection(limit: 12) {
+//               total
+//               items {
+//                 ... on Recipe {
+//                   title
+//                   slug
+//                 }
+//               }
+//             }
+//           }
+//           sys {
+//             id
+//           }
+//           title
+//           slug
+//         }
+//       }
+//     }
+//   }
+// `;
 
-const taxonomyChildren = `
-  childrenCollection {
-    total
-    items {
-      ... on Tag {
-        linkedFrom {
-          recipeCollection(limit: 12) {
-            total
-            items {
-              ... on Recipe {
-                title
-                slug
-              }
-            }
-          }
-        }
-        sys {
-          id
-        }
-        title
-        slug
-      }
-      ... on Taxonomy {
-        sys {
-          id
-        }
-        title
-        slug
-        tag {
-          linkedFrom {
-            recipeCollection(limit: 12) {
-              total
-              items {
-                ... on Recipe {
-                  title
-                  slug
-                }
-              }
-            }
-          }
-          sys {
-            id
-          }
-          title
-          slug
-        }
-        ${taxonomyGrandChildren}
-      }
-    }
-  }
-`;
+// const taxonomyChildren = `
+//   childrenCollection {
+//     total
+//     items {
+//       ... on Tag {
+//         linkedFrom {
+//           recipeCollection(limit: 12) {
+//             total
+//             items {
+//               ... on Recipe {
+//                 title
+//                 slug
+//               }
+//             }
+//           }
+//         }
+//         sys {
+//           id
+//         }
+//         title
+//         slug
+//       }
+//       ... on Taxonomy {
+//         sys {
+//           id
+//         }
+//         title
+//         slug
+//         tag {
+//           linkedFrom {
+//             recipeCollection(limit: 12) {
+//               total
+//               items {
+//                 ... on Recipe {
+//                   title
+//                   slug
+//                 }
+//               }
+//             }
+//           }
+//           sys {
+//             id
+//           }
+//           title
+//           slug
+//         }
+//         ${taxonomyGrandChildren}
+//       }
+//     }
+//   }
+// `;
 
 type TaxonomyQueryProps = {
   taxonomy: string;

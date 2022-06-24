@@ -8,7 +8,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
-import { Maybe, TagLinkingCollections, Taxonomy } from '../../schema';
+import CategoryMenuItem from './CategoryMenuItem';
+
+import { Maybe, Taxonomy } from '../../schema';
 
 const styles = {
   drawer: {
@@ -18,6 +20,9 @@ const styles = {
       width: 240,
     },
   },
+  category: {
+    pl: 0,
+  },
 };
 
 type NavDrawerType = {
@@ -26,75 +31,40 @@ type NavDrawerType = {
   onClick: VoidFunction;
 };
 
-const NavDrawer = ({ isOpen, nav, onClick }: NavDrawerType) => (
-  <Box component="nav">
-    <Drawer
-      anchor="right"
-      ModalProps={{
-        keepMounted: true, // Better open performance on mobile.
-      }}
-      onClose={onClick}
-      open={isOpen}
-      sx={styles.drawer}
-      variant="temporary"
-    >
-      <Box onClick={onClick}>
+const NavDrawer = ({ isOpen, nav, onClick }: NavDrawerType) => {
+  console.log({ nav });
+  return (
+    <Box component="nav">
+      <Drawer
+        anchor="right"
+        ModalProps={{
+          keepMounted: true, // Better open performance on mobile.
+        }}
+        onClose={onClick}
+        open={isOpen}
+        sx={styles.drawer}
+        variant="temporary"
+      >
         <List>
           <ListItem disablePadding>
-            <ListItemButton component={Link} to="/">
+            <ListItemButton component={Link} to="/" onClick={onClick}>
               <ListItemText primary="All Recipes" />
             </ListItemButton>
           </ListItem>
 
           <Divider />
 
-          {nav.map((node) => {
-            // TODO: need some kind of recursive parser (or just pass node into menu item to decide)
-            const { slug, title, tag, __typename: type } = node ?? {};
-
-            const { linkedFrom: tagLinks } = tag ?? {};
-            const { linkedFrom } = node ?? {};
-
-            const nodeLinks = linkedFrom as Maybe<TagLinkingCollections>;
-
-            const numRecipes =
-              tagLinks?.recipeCollection?.['total'] ||
-              nodeLinks?.recipeCollection?.['total'];
-
-            // const { recipeCollection } = tagLinks ?? {};
-            // const { total: numRecipes } = recipeCollection ?? {};
-            // const links = nodeLinks || tagLinks;
-            // console.log({ title });
-            // console.log({ slug });
-            // console.log({ slug });
-            // console.log({ tag });
-            // console.log({ type });
-            // console.log({ numRecipes });
-
-            // const { recipeCollection } = links ?? {};
-
-            console.log(title, type, tag, numRecipes);
-            // console.log(links, recipeCollection);
-
-            // console.log(tag?.linkedFrom?.recipeCollection?.total);
-            // TODO: update content moded to use Tag as top level for taxonomy,
-            // so that linkedFrom has values (i.e., Meat as Category is not linkedFrom any recipe)
-
-            if (!numRecipes) return null;
-
-            return (
-              <ListItem key={slug} disablePadding>
-                <ListItemButton component={Link} to={`/category/${slug}`}>
-                  <ListItemText primary={title} />
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
+          {nav?.map((node: Maybe<Taxonomy>) => (
+            <CategoryMenuItem
+              key={node?.sys?.id}
+              node={node}
+              onClick={onClick}
+            />
+          ))}
         </List>
-      </Box>
-      {/* {drawer} */}
-    </Drawer>
-  </Box>
-);
+      </Drawer>
+    </Box>
+  );
+};
 
 export default NavDrawer;
