@@ -10,7 +10,7 @@ import ListItemText from '@mui/material/ListItemText';
 
 import CategoryMenu from './CategoryMenu';
 
-import { Maybe, Taxonomy } from '../../schema';
+import { Maybe, Tag, Taxonomy } from '../../schema';
 
 const styles = {
   drawer: {
@@ -29,7 +29,7 @@ type NavDrawerType = {
 };
 
 const NavDrawer = ({ isOpen, nav, onClick }: NavDrawerType) => {
-  console.log({ nav });
+  // console.log({ nav });
   return (
     <Box component="nav">
       <Drawer
@@ -51,9 +51,18 @@ const NavDrawer = ({ isOpen, nav, onClick }: NavDrawerType) => {
 
           <Divider />
 
-          {nav?.map((node: Maybe<Taxonomy>) => (
-            <CategoryMenu key={node?.sys?.id} node={node} onClick={onClick} />
-          ))}
+          {nav?.map((node: Maybe<Taxonomy>) => {
+            const categoryTag = (node?.tag || node) as Tag;
+            const { linkedFrom } = categoryTag ?? {};
+            const { recipeCollection } = linkedFrom ?? {};
+            const { total: numRecipes } = recipeCollection ?? {};
+
+            // console.log({ type }, { recipeCollection }, { numRecipes });
+
+            return numRecipes ? (
+              <CategoryMenu key={node?.sys?.id} node={node} onClick={onClick} />
+            ) : null;
+          })}
         </List>
       </Drawer>
     </Box>

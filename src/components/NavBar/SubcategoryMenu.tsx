@@ -15,6 +15,7 @@ import { SxProps, Theme } from '@mui/material';
 
 import {
   Maybe,
+  Tag,
   TaxonomyChildrenCollection,
   TaxonomyChildrenItem,
 } from '../../schema';
@@ -58,7 +59,12 @@ const SubcategoryMenu = ({
             (child: Maybe<TaxonomyChildrenItem>) => {
               const { slug, title, sys } = child ?? {};
               const { id } = sys ?? {};
-              return (
+              const categoryTag = child as Tag;
+              const { linkedFrom } = categoryTag ?? {};
+              const { recipeCollection } = linkedFrom ?? {};
+              const { total: numRecipes } = recipeCollection ?? {};
+
+              return numRecipes ? (
                 <ListItem key={id}>
                   <CategoryListItemButton
                     slug={slug}
@@ -66,7 +72,7 @@ const SubcategoryMenu = ({
                     onClick={onClick}
                   />
                 </ListItem>
-              );
+              ) : null;
             }
           )}
         </List>
