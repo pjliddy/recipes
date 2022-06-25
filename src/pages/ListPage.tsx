@@ -38,8 +38,6 @@ const ListPage = () => {
   const recipes =
     data?.tagCollection?.items?.[0]?.linkedFrom?.recipeCollection?.items;
 
-  if (!recipes) return <Loading />;
-
   return (
     <Container className="main" component="main">
       <Typography variant="h1" gutterBottom sx={styles.title}>

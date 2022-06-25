@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useQuery, gql, ApolloError } from '@apollo/client';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -20,8 +20,7 @@ import Tags from 'components/Recipe/Tags';
 
 import Loading from 'components/Loading';
 
-import { Recipe } from 'schema';
-import { getRecipe } from 'lib/content';
+import { RecipeCollection } from 'schema';
 
 import theme from 'theme';
 
@@ -40,8 +39,15 @@ const imgSizes = {
   },
 };
 
+type QueryProps = {
+  loading: boolean;
+  error?: ApolloError | undefined;
+  data?: {
+    recipeCollection: RecipeCollection;
+  };
+};
+
 const RecipePage = () => {
-  const [recipe, setRecipe] = useState<Recipe | undefined>();
   const { slug } = useParams() ?? {};
 
   const isMd = useMediaQuery(theme.breakpoints.up('md'));
@@ -49,12 +55,14 @@ const RecipePage = () => {
   const size = isMd ? 'md' : isSm ? 'sm' : 'xs';
 
   if (!slug) return null;
+  const { loading, error, data }: QueryProps = useQuery(recipeQuery, {
+    variables: { slug },
+  });
 
-  useEffect(() => {
-    getRecipe({ slug }).then((recipe) => setRecipe(recipe));
-  }, [slug]);
+  if (loading) return <Loading />;
+  if (error) console.error(error);
 
-  if (!recipe) return <Loading />;
+  const recipe = data?.recipeCollection?.items?.[0];
 
   const {
     title,
@@ -130,4 +138,68 @@ const RecipePage = () => {
   );
 };
 
+const recipeQuery = gql`
+  query ($slug: String!) {
+    recipeCollection(where: { slug: $slug }, limit: 1) {
+      items {
+        sys {
+          id
+        }
+        title
+        slug
+        slug
+        description {
+          json
+        }
+        abstract
+        image {
+          title
+          description
+          contentType
+          fileName
+          size
+          url
+          height
+          width
+        }
+        ingredientsCollection(limit: 10) {
+          items {
+            ... on IngredientSection {
+              sys {
+                id
+              }
+              title
+              slug
+              label
+              ingredientList
+            }
+          }
+        }
+        equipment
+        instructionsCollection(limit: 10) {
+          items {
+            ... on InstructionSection {
+              sys {
+                id
+              }
+              title
+              slug
+              label
+              instructionList
+            }
+          }
+        }
+        notes
+        tagsCollection(limit: 10) {
+          items {
+            ... on Tag {
+              title
+              slug
+            }
+          }
+        }
+      }
+    }
+  }
+`;
 export default RecipePage;
