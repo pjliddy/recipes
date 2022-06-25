@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useQuery, gql, ApolloError } from '@apollo/client';
+import { useQuery, ApolloError } from '@apollo/client';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -8,6 +8,8 @@ import Loading from 'components/Loading';
 import RecipeGrid from 'components/RecipeList/RecipeGrid';
 
 import { TagCollection } from 'schema';
+
+import { listpageQuery } from 'lib/queries';
 
 const styles = {
   title: {
@@ -49,77 +51,5 @@ const ListPage = () => {
     </Container>
   );
 };
-
-const listpageQuery = gql`
-  query ($tag: String!) {
-    tagCollection(where: { slug: $tag }, limit: 1) {
-      items {
-        linkedFrom {
-          recipeCollection(limit: 12) {
-            total
-            items {
-              sys {
-                id
-              }
-              title
-              slug
-              slug
-              description {
-                json
-              }
-              abstract
-              image {
-                title
-                description
-                contentType
-                fileName
-                size
-                url
-                height
-                width
-              }
-              ingredientsCollection(limit: 10) {
-                items {
-                  ... on IngredientSection {
-                    sys {
-                      id
-                    }
-                    title
-                    slug
-                    label
-                    ingredientList
-                  }
-                }
-              }
-              equipment
-              instructionsCollection(limit: 10) {
-                items {
-                  ... on InstructionSection {
-                    sys {
-                      id
-                    }
-                    title
-                    slug
-                    label
-                    instructionList
-                  }
-                }
-              }
-              notes
-              tagsCollection(limit: 10) {
-                items {
-                  ... on Tag {
-                    title
-                    slug
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 
 export default ListPage;

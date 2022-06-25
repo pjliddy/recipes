@@ -1,40 +1,5 @@
 import { gql } from '@apollo/client';
 
-// export const homeQuery = () => {
-//   return `
-//     {
-//       recipeCollection {
-//         items {
-//           ${recipe}
-//         }
-//       }
-//     }
-//   `;
-// };
-
-// type ListQueryProps = {
-//   tag: string;
-// };
-
-// export const listQuery = ({ tag }: ListQueryProps) => {
-//   return `
-//     {
-//       tagCollection(where: { slug: "${tag}" }, limit: 1) {
-//         items {
-//           linkedFrom {
-//             recipeCollection(limit: 12) {
-//               total
-//               items {
-//                 ${recipe}
-//               }
-//             }
-//           }
-//         }
-//       }
-//     }
-//   `;
-// };
-
 /*
   Fragments wiht default fields for:
     * Tag
@@ -210,6 +175,9 @@ const IMAGE_DEFAULT = gql`
 
 const RECIPE_DEFAULT = gql`
   ${IMAGE_DEFAULT}
+  ${INGREDIENTS_DEFAULT}
+  ${INSTRUCTIONS_DEFAULT}
+  ${TAG_DEFAULT}
 
   fragment RecipeDefault on Recipe {
     sys {
@@ -225,6 +193,23 @@ const RECIPE_DEFAULT = gql`
     image {
       ...ImageDefault
     }
+    ingredientsCollection(limit: 10) {
+      items {
+        ...IngredientsDefault
+      }
+    }
+    equipment
+    instructionsCollection(limit: 10) {
+      items {
+        ...InstructionsDefault
+      }
+    }
+    notes
+    tagsCollection(limit: 10) {
+      items {
+        ...TagDefault
+      }
+    }
   }
 `;
 
@@ -233,30 +218,51 @@ const RECIPE_DEFAULT = gql`
 */
 
 export const recipeQuery = gql`
-  ${INGREDIENTS_DEFAULT}
-  ${INSTRUCTIONS_DEFAULT}
   ${RECIPE_DEFAULT}
-  ${TAG_DEFAULT}
 
   query ($slug: String!) {
     recipeCollection(where: { slug: $slug }, limit: 1) {
       items {
         ...RecipeDefault
-        ingredientsCollection(limit: 10) {
-          items {
-            ...IngredientsDefault
-          }
-        }
-        equipment
-        instructionsCollection(limit: 10) {
-          items {
-            ...InstructionsDefault
-          }
-        }
-        notes
-        tagsCollection(limit: 10) {
-          items {
-            ...TagDefault
+      }
+    }
+  }
+`;
+
+/*
+  Query for Homepage RecipeCollection (all recipes)
+*/
+
+export const homepageQuery = gql`
+  ${RECIPE_DEFAULT}
+
+  query {
+    recipeCollection {
+      total
+      items {
+        ...RecipeDefault
+      }
+    }
+  }
+`;
+
+/*
+  Query for List Page RecipeCollection (all recipes matching tag)
+*/
+
+export const listpageQuery = gql`
+  ${RECIPE_DEFAULT}
+
+  query ($tag: String!) {
+    tagCollection(where: { slug: $tag }, limit: 1) {
+      total
+      items {
+        linkedFrom {
+          recipeCollection(limit: 12) {
+            total
+            items {
+              ...RecipeDefault
+            }
           }
         }
       }
