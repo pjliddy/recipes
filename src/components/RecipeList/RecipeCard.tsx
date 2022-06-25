@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 
 import TagButtons from 'components/TagButtons';
 
-import { Recipe, Tag } from 'schema';
+import { Maybe, Recipe, Tag } from 'schema';
 
 import theme from 'theme';
 
@@ -42,7 +42,7 @@ const imgSizes = {
 };
 
 type RecipeCardProps = {
-  recipe: Recipe;
+  recipe: Maybe<Recipe>;
 };
 
 const RecipeCard = ({ recipe }: RecipeCardProps) => {

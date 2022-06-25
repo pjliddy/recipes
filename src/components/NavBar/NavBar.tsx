@@ -31,8 +31,6 @@ const NavBar = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  console.log({ data });
-
   const navData = data?.taxonomyCollection?.items?.[0];
 
   return (

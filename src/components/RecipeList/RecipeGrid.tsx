@@ -3,10 +3,10 @@ import Grid from '@mui/material/Grid';
 import Loading from 'components/Loading';
 import RecipeCard from 'components/RecipeList/RecipeCard';
 
-import { Recipe } from 'schema';
+import { Maybe, Recipe } from 'schema';
 
 type RecipeGridProps = {
-  recipes: Recipe[];
+  recipes?: Maybe<Recipe>[];
 };
 
 const styles = {
@@ -21,8 +21,8 @@ const RecipeGrid = ({ recipes }: RecipeGridProps) => {
   return (
     <Grid container spacing={2}>
       {recipes &&
-        recipes.map((recipe: Recipe) => (
-          <Grid item md={4} sm={6} xs={12} key={recipe.slug} sx={styles.grid}>
+        recipes.map((recipe: Maybe<Recipe>) => (
+          <Grid item md={4} sm={6} xs={12} key={recipe?.slug} sx={styles.grid}>
             <RecipeCard recipe={recipe} />
           </Grid>
         ))}
