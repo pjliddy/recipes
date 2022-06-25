@@ -1,143 +1,52 @@
 import { gql } from '@apollo/client';
 
-const tags = `
-  tagsCollection(limit: 10) {
-    items {
-      ... on Tag {
-      title
-      slug
-      }
-    }
-  }
-`;
+// export const homeQuery = () => {
+//   return `
+//     {
+//       recipeCollection {
+//         items {
+//           ${recipe}
+//         }
+//       }
+//     }
+//   `;
+// };
 
-const instructions = `
-  instructionsCollection(limit: 10) {
-    items {
-      ... on InstructionSection {
-        sys {
-        id
-        }
-        title
-        slug
-        label
-        instructionList
-      }
-    }
-  }
-`;
+// type ListQueryProps = {
+//   tag: string;
+// };
 
-const ingredients = `
-  ingredientsCollection(limit: 10) {
-    items {
-      ... on IngredientSection {
-        sys {
-        id
-        }
-        title
-        slug
-        label
-        ingredientList
-      }
-    }       
-  }
-`;
-
-const image = `
-  image {
-    title
-    description
-    contentType
-    fileName
-    size
-    url
-    height
-    width
-  }
-`;
-
-const recipe = `
-  sys {
-    id
-  }
-  title
-  slug
-  slug
-  description {
-    json
-  }
-  abstract
-  ${image}
-  ${ingredients}
-  equipment
-  ${instructions}  
-  notes
-  ${tags}
-`;
-
-export const homeQuery = () => {
-  return `
-    {
-      recipeCollection {
-        items {
-          ${recipe}
-        }
-      }
-    }
-  `;
-};
-
-type ListQueryProps = {
-  tag: string;
-};
-
-export const listQuery = ({ tag }: ListQueryProps) => {
-  return `
-    {
-      tagCollection(where: { slug: "${tag}" }, limit: 1) {
-        items {
-          linkedFrom {
-            recipeCollection(limit: 12) {
-              total
-              items {
-                ${recipe}
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-};
-
-type RecipeQueryProps = {
-  slug: string;
-};
-
-export const recipeQuery = ({ slug }: RecipeQueryProps) => {
-  return `
-    {
-      recipeCollection(where: {slug: "${slug}"}, limit: 1) {
-        items {
-          ${recipe}
-        }
-      }
-    }
-  `;
-};
+// export const listQuery = ({ tag }: ListQueryProps) => {
+//   return `
+//     {
+//       tagCollection(where: { slug: "${tag}" }, limit: 1) {
+//         items {
+//           linkedFrom {
+//             recipeCollection(limit: 12) {
+//               total
+//               items {
+//                 ${recipe}
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   `;
+// };
 
 /*
-  Default fields for:
+  Fragments wiht default fields for:
     * Tag
     * Taxonomy
 */
 
 const TAG_DEFAULT = gql`
   fragment TagDefault on Tag {
-    __typename
     sys {
       id
     }
+    __typename
     title
     slug
   }
@@ -145,17 +54,17 @@ const TAG_DEFAULT = gql`
 
 const TAXONOMY_DEFAULT = gql`
   fragment TaxonomyDefault on Taxonomy {
-    __typename
     sys {
       id
     }
+    __typename
     title
     slug
   }
 `;
 
 /*
-  Fields for Tag with linkedFrom Recipes
+  Fragment with fields for Tag with linkedFrom Recipes
 */
 
 const TAG_WITH_LINKS = gql`
@@ -239,6 +148,115 @@ export const taxonomyQuery = gql`
           items {
             ...TagWithLinks
             ...TaxonomyWithChildren
+          }
+        }
+      }
+    }
+  }
+`;
+
+/*
+  Fragments with default fields for Recipe-specific sections:
+    * Ingredients
+    * Instructions
+    * Image
+    * Recipe
+*/
+
+const INGREDIENTS_DEFAULT = gql`
+  fragment IngredientsDefault on IngredientSection {
+    ... on IngredientSection {
+      sys {
+        id
+      }
+      title
+      slug
+      label
+      ingredientList
+    }
+  }
+`;
+
+const INSTRUCTIONS_DEFAULT = gql`
+  fragment InstructionsDefault on InstructionSection {
+    ... on InstructionSection {
+      sys {
+        id
+      }
+      title
+      slug
+      label
+      instructionList
+    }
+  }
+`;
+
+const IMAGE_DEFAULT = gql`
+  fragment ImageDefault on Asset {
+    sys {
+      id
+    }
+    __typename
+    title
+    description
+    contentType
+    fileName
+    size
+    url
+    height
+    width
+  }
+`;
+
+const RECIPE_DEFAULT = gql`
+  ${IMAGE_DEFAULT}
+
+  fragment RecipeDefault on Recipe {
+    sys {
+      id
+    }
+    __typename
+    title
+    slug
+    description {
+      json
+    }
+    abstract
+    image {
+      ...ImageDefault
+    }
+  }
+`;
+
+/*
+  Query for Recipe based on slug
+*/
+
+export const recipeQuery = gql`
+  ${INGREDIENTS_DEFAULT}
+  ${INSTRUCTIONS_DEFAULT}
+  ${RECIPE_DEFAULT}
+  ${TAG_DEFAULT}
+
+  query ($slug: String!) {
+    recipeCollection(where: { slug: $slug }, limit: 1) {
+      items {
+        ...RecipeDefault
+        ingredientsCollection(limit: 10) {
+          items {
+            ...IngredientsDefault
+          }
+        }
+        equipment
+        instructionsCollection(limit: 10) {
+          items {
+            ...InstructionsDefault
+          }
+        }
+        notes
+        tagsCollection(limit: 10) {
+          items {
+            ...TagDefault
           }
         }
       }

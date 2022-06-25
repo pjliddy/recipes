@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useQuery, gql, ApolloError } from '@apollo/client';
+import { useQuery, ApolloError } from '@apollo/client';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -21,6 +21,8 @@ import Tags from 'components/Recipe/Tags';
 import Loading from 'components/Loading';
 
 import { RecipeCollection } from 'schema';
+
+import { recipeQuery } from 'lib/queries';
 
 import theme from 'theme';
 
@@ -95,21 +97,18 @@ const RecipePage = () => {
     <Container className="main" component="main">
       <Grid container direction="row" spacing={2}>
         <Grid item md>
-          {/* <Stack direction="column"> */}
           <Typography variant="h1" gutterBottom>
             {title}
           </Typography>
           {descriptionDoc && (
             <Box>{documentToReactComponents(descriptionDoc)}</Box>
           )}
-          {/* </Stack> */}
         </Grid>
         {image && (
           <Grid item md>
             <img
               alt={alt}
               src={`${src}?w=${imgSizes.width[size]}&h=${imgSizes.height[size]}&fm=webp`}
-              // src={`${src}`}
               style={{ maxWidth: '100%', height: 'auto' }}
               height={imgSizes.height[size]}
               width={imgSizes.width[size]}
@@ -138,68 +137,4 @@ const RecipePage = () => {
   );
 };
 
-const recipeQuery = gql`
-  query ($slug: String!) {
-    recipeCollection(where: { slug: $slug }, limit: 1) {
-      items {
-        sys {
-          id
-        }
-        title
-        slug
-        slug
-        description {
-          json
-        }
-        abstract
-        image {
-          title
-          description
-          contentType
-          fileName
-          size
-          url
-          height
-          width
-        }
-        ingredientsCollection(limit: 10) {
-          items {
-            ... on IngredientSection {
-              sys {
-                id
-              }
-              title
-              slug
-              label
-              ingredientList
-            }
-          }
-        }
-        equipment
-        instructionsCollection(limit: 10) {
-          items {
-            ... on InstructionSection {
-              sys {
-                id
-              }
-              title
-              slug
-              label
-              instructionList
-            }
-          }
-        }
-        notes
-        tagsCollection(limit: 10) {
-          items {
-            ... on Tag {
-              title
-              slug
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 export default RecipePage;
