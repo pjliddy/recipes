@@ -237,7 +237,7 @@ export const homepageQuery = gql`
   ${RECIPE_DEFAULT}
 
   query {
-    recipeCollection {
+    recipeCollection(order: title_ASC) {
       total
       items {
         ...RecipeDefault

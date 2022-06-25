@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import Loading from 'components/Loading';
 import RecipeGrid from 'components/RecipeList/RecipeGrid';
 
-import { TagCollection } from 'schema';
+import { TagCollection, Recipe } from 'schema';
 
 import { listpageQuery } from 'lib/queries';
 
@@ -37,8 +37,12 @@ const ListPage = () => {
   if (loading) return <Loading />;
   if (error) console.error(error);
 
-  const recipes =
+  const recipeItems =
     data?.tagCollection?.items?.[0]?.linkedFrom?.recipeCollection?.items;
+
+  const recipes = [...(recipeItems as Recipe[])].sort((a, b) =>
+    (a?.title as string) > (b?.title as string) ? 1 : -1
+  );
 
   return (
     <Container className="main" component="main">
