@@ -1,7 +1,7 @@
 const { REACT_APP_CDA_TOKEN, REACT_APP_SPACE_ID } = process.env;
 const gqlEndpoint = `https://graphql.contentful.com/content/v1/spaces/${REACT_APP_SPACE_ID}/`;
 
-import { listQuery, recipeQuery } from 'lib/queries';
+import { recipeQuery } from 'lib/queries';
 
 type GetContentProps = {
   query: string;
@@ -41,10 +41,4 @@ type GetRecipesProps = {
   tag: string;
 };
 
-const getRecipes = async ({ tag }: GetRecipesProps) => {
-  const query = listQuery({ tag });
-  const { tagCollection } = await getContent({ query });
-  return tagCollection.items[0].linkedFrom.recipeCollection.items;
-};
-
-export { getRecipe, getRecipes };
+export { getRecipe };
