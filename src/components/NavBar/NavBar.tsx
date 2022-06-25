@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useQuery, gql, ApolloError } from '@apollo/client';
+import { useQuery, ApolloError } from '@apollo/client';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,6 +12,10 @@ import NavMenu from 'components/NavBar/NavMenu/NavMenu';
 
 import { TaxonomyCollection } from 'schema';
 
+import { taxonomyQuery } from 'lib/queries';
+
+const TAXONOMY = 'categories';
+
 type QueryProps = {
   loading: boolean;
   error?: ApolloError | undefined;
@@ -22,7 +26,9 @@ type QueryProps = {
 
 const NavBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const { loading, error, data }: QueryProps = useQuery(taxonomyQuery);
+  const { loading, error, data }: QueryProps = useQuery(taxonomyQuery, {
+    variables: { slug: TAXONOMY },
+  });
 
   if (loading) return <Loading />;
   if (error) console.error(error);
@@ -47,98 +53,5 @@ const NavBar = () => {
     </AppBar>
   );
 };
-
-const taxonomyQuery = gql`
-  {
-    taxonomyCollection(where: { slug: "categories" }, limit: 1) {
-      items {
-        __typename
-        sys {
-          id
-        }
-        title
-        slug
-        tag {
-          sys {
-            id
-          }
-          title
-          slug
-        }
-        childrenCollection(limit: 24) {
-          total
-          items {
-            ... on Tag {
-              __typename
-              sys {
-                id
-              }
-              title
-              slug
-              linkedFrom {
-                recipeCollection(limit: 1) {
-                  total
-                }
-              }
-            }
-            ... on Taxonomy {
-              __typename
-              sys {
-                id
-              }
-              title
-              slug
-              tag {
-                sys {
-                  id
-                }
-                title
-                slug
-                linkedFrom {
-                  recipeCollection(limit: 1) {
-                    total
-                  }
-                }
-              }
-              childrenCollection {
-                total
-                items {
-                  ... on Tag {
-                    __typename
-                    sys {
-                      id
-                    }
-                    title
-                    slug
-                    linkedFrom {
-                      recipeCollection(limit: 1) {
-                        total
-                      }
-                    }
-                  }
-                  ... on Taxonomy {
-                    __typename
-                    sys {
-                      id
-                    }
-                    title
-                    slug
-                    tag {
-                      sys {
-                        id
-                      }
-                      title
-                      slug
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
 
 export default NavBar;
