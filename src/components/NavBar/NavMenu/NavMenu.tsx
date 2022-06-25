@@ -23,7 +23,7 @@ const styles = {
 
 type NavMenuType = {
   isOpen: boolean;
-  nav: Maybe<Taxonomy>;
+  nav?: Maybe<Taxonomy>;
   onClick: VoidFunction;
 };
 

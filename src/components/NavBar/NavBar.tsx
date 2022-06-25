@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useQuery, gql } from '@apollo/client';
+import { useQuery, gql, ApolloError } from '@apollo/client';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,13 +10,19 @@ import LogoButton from 'components/NavBar/LogoButton';
 import MenuButton from 'components/NavBar/MenuButton';
 import NavMenu from 'components/NavBar/NavMenu/NavMenu';
 
-import { Maybe, Taxonomy } from 'schema';
+import { TaxonomyCollection } from 'schema';
+
+type QueryProps = {
+  loading: boolean;
+  error?: ApolloError | undefined;
+  data?: {
+    taxonomyCollection: TaxonomyCollection;
+  };
+};
 
 const NavBar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
-  const query = taxonomyQuery;
-  const { loading, error, data } = useQuery(query);
+  const { loading, error, data }: QueryProps = useQuery(taxonomyQuery);
 
   if (loading) return <Loading />;
   if (error) console.error(error);
@@ -25,7 +31,9 @@ const NavBar = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
-  const navData = data?.taxonomyCollection?.items?.[0] as Maybe<Taxonomy>;
+  console.log({ data });
+
+  const navData = data?.taxonomyCollection?.items?.[0];
 
   return (
     <AppBar component="nav">
