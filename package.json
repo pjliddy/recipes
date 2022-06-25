@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@contentful/rich-text-react-renderer": "^15.12.1",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
@@ -47,6 +48,7 @@
   "overrides": {
     "@svgr/webpack": "$@svgr/webpack"
   },
+  "type": "module",
   "scripts": {
     "gen": "graphql-codegen --config codegen.yml --require dotenv/config",
     "start": "npm run gen && react-scripts start",

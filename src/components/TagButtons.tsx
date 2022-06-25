@@ -2,7 +2,7 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import { Link } from 'react-router-dom';
 
-import { Tag } from '../schema';
+import { Tag } from 'schema';
 
 const style = {
   button: {

@@ -10,11 +10,11 @@ import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 
-import TagButtons from '../TagButtons';
+import TagButtons from 'components/TagButtons';
 
-import { Recipe, Tag } from '../../schema';
+import { Recipe, Tag } from 'schema';
 
-import theme from '../../theme';
+import theme from 'theme';
 
 const styles = {
   abstract: {

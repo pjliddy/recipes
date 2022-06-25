@@ -12,18 +12,18 @@ import Typography from '@mui/material/Typography';
 // TODO: componentize
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-import Equipment from '../components/Recipe/Equipment';
-import Ingredients from '../components/Recipe/Ingredients';
-import Instructions from '../components/Recipe/Instructions';
-import Notes from '../components/Recipe/Notes';
-import Tags from '../components/Recipe/Tags';
+import Equipment from 'components/Recipe/Equipment';
+import Ingredients from 'components/Recipe/Ingredients';
+import Instructions from 'components/Recipe/Instructions';
+import Notes from 'components/Recipe/Notes';
+import Tags from 'components/Recipe/Tags';
 
-import Loading from '../components/Loading';
+import Loading from 'components/Loading';
 
-import { Recipe } from '../schema';
-import { getRecipe } from '../lib/content';
+import { Recipe } from 'schema';
+import { getRecipe } from 'lib/content';
 
-import theme from '../theme';
+import theme from 'theme';
 
 const imgSizes = {
   height: {

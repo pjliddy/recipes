@@ -209,7 +209,7 @@ type TaxonomyQueryProps = {
 export const taxonomyQuery = ({ taxonomy }: TaxonomyQueryProps) => {
   return `
     {
-      taxonomyCollection(where: { title: "${taxonomy}" }, limit: 1) {
+      taxonomyCollection(where: { slug: "${taxonomy}" }, limit: 1) {
         items {
           __typename
           sys {

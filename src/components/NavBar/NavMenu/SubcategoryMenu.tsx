@@ -9,11 +9,11 @@ import ListItem from '@mui/material/ListItem';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 
-import CategoryListItemButton from './CategoryListItemButton';
+import CategoryListItemButton from 'components/NavBar/NavMenu/CategoryListItemButton';
 
 import { SxProps, Theme } from '@mui/material';
 
-import { Maybe, Tag, Taxonomy, TaxonomyChildrenItem } from '../../schema';
+import { Maybe, Tag, Taxonomy, TaxonomyChildrenItem } from 'schema';
 
 type SubcategoryMenuProps = {
   taxonomy: Maybe<Taxonomy>;

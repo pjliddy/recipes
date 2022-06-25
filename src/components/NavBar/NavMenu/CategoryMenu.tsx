@@ -1,10 +1,10 @@
 import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 
-import CategoryListItemButton from './CategoryListItemButton';
-import SubcategoryMenu from './SubcategoryMenu';
+import CategoryListItemButton from 'components/NavBar/NavMenu/CategoryListItemButton';
+import SubcategoryMenu from 'components/NavBar/NavMenu/SubcategoryMenu';
 
-import { Maybe, TagLinkingCollections, Taxonomy } from '../../schema';
+import { Maybe, TagLinkingCollections, Taxonomy } from 'schema';
 
 const styles = {
   category: {

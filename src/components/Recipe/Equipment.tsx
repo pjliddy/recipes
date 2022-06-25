@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 
 import KitchenTwoToneIcon from '@mui/icons-material/KitchenTwoTone';
 
-import { Maybe, Scalars } from '../../schema';
+import { Maybe, Scalars } from 'schema';
 
 type EquipmentProps = {
   equipment?: Maybe<Array<Maybe<Scalars['String']>>>;

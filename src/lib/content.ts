@@ -1,12 +1,7 @@
 const { REACT_APP_CDA_TOKEN, REACT_APP_SPACE_ID } = process.env;
 const gqlEndpoint = `https://graphql.contentful.com/content/v1/spaces/${REACT_APP_SPACE_ID}/`;
 
-import {
-  homeQuery,
-  listQuery,
-  recipeQuery,
-  taxonomyQuery,
-} from '../lib/queries';
+import { homeQuery, listQuery, recipeQuery, taxonomyQuery } from 'lib/queries';
 
 type GetContentProps = {
   query: string;

@@ -1,12 +1,12 @@
-// import InterBlackTtf from '../fonts/Inter-Black.ttf';
-// import InterBoldTtf from '../fonts/Inter-Bold.ttf';
-// import InterExtraBoldTtf from '../fonts/Inter-ExtraBold.ttf';
-// import InterExtraLightTtf from '../fonts/Inter-ExtraLight.ttf';
-// import InterLightTtf from '../fonts/Inter-Light.ttf';
-import InterMediumTtf from '../fonts/Inter-Medium.ttf';
-import InterRegularTtf from '../fonts/Inter-Regular.ttf';
-// import InterSemiBoldTtf from '../fonts/Inter-SemiBold.ttf';
-// import InterThinTtf from '../fonts/Inter-Thin.ttf';
+// import InterBlackTtf from 'fonts/Inter-Black.ttf';
+// import InterBoldTtf from 'fonts/Inter-Bold.ttf';
+// import InterExtraBoldTtf from 'fonts/Inter-ExtraBold.ttf';
+// import InterExtraLightTtf from 'fonts/Inter-ExtraLight.ttf';
+// import InterLightTtf from 'fonts/Inter-Light.ttf';
+import InterMediumTtf from 'fonts/Inter-Medium.ttf';
+import InterRegularTtf from 'fonts/Inter-Regular.ttf';
+// import InterSemiBoldTtf from 'fonts/Inter-SemiBold.ttf';
+// import InterThinTtf from 'fonts/Inter-Thin.ttf';
 
 const Inter = `
   font-display: swap;

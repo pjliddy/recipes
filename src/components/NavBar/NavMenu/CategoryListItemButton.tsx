@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
-import { Maybe } from '../../schema';
+import { Maybe } from 'schema';
 
 type CategoryListItemButtonProps = {
   onClick: VoidFunction;

@@ -4,11 +4,11 @@ import { useParams } from 'react-router-dom';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 
-import Loading from '../components/Loading';
-import RecipeGrid from '../components/RecipeList/RecipeGrid';
+import Loading from 'components/Loading';
+import RecipeGrid from 'components/RecipeList/RecipeGrid';
 
-import { Recipe } from '../schema';
-import { getRecipes } from '../lib/content';
+import { Recipe } from 'schema';
+import { getRecipes } from 'lib/content';
 
 const styles = {
   title: {

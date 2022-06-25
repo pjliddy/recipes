@@ -7,9 +7,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
-import CategoryMenu from './CategoryMenu';
+import CategoryMenu from 'components/NavBar/NavMenu/CategoryMenu';
 
-import { Maybe, Tag, Taxonomy } from '../../schema';
+import { Maybe, Tag, Taxonomy } from 'schema';
 
 const styles = {
   drawer: {
@@ -21,13 +21,13 @@ const styles = {
   },
 };
 
-type NavDrawerType = {
+type NavMenuType = {
   isOpen: boolean;
   nav: Maybe<Taxonomy>[];
   onClick: VoidFunction;
 };
 
-const NavDrawer = ({ isOpen, nav, onClick }: NavDrawerType) => {
+const NavMenu = ({ isOpen, nav, onClick }: NavMenuType) => {
   return (
     <Drawer
       anchor="right"
@@ -63,4 +63,4 @@ const NavDrawer = ({ isOpen, nav, onClick }: NavDrawerType) => {
   );
 };
 
-export default NavDrawer;
+export default NavMenu;

@@ -1,11 +1,11 @@
 import { deepmerge } from '@mui/utils';
 import { createTheme } from '@mui/material/styles';
 
-import baseTheme from './theme';
-import cardTheme from './card';
-import containerTheme from './container';
-import listTheme from './list';
-import typeTheme from './type';
+import baseTheme from 'theme/theme';
+import cardTheme from 'theme/card';
+import containerTheme from 'theme/container';
+import listTheme from 'theme/list';
+import typeTheme from 'theme/type';
 
 let build = createTheme(deepmerge(baseTheme, typeTheme));
 build = createTheme(deepmerge(build, cardTheme));

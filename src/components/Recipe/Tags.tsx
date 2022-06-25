@@ -1,9 +1,9 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import TagButtons from '../TagButtons';
+import TagButtons from 'components/TagButtons';
 
-import { RecipeTagsCollection, Tag } from '../../schema';
+import { RecipeTagsCollection, Tag } from 'schema';
 
 type TagsProps = {
   collection?: RecipeTagsCollection;

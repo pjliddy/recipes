@@ -6,7 +6,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import { RecipeInstructionsCollection, InstructionSection } from '../../schema';
+import { RecipeInstructionsCollection, InstructionSection } from 'schema';
 
 type InstructionsProps = {
   collection?: RecipeInstructionsCollection;

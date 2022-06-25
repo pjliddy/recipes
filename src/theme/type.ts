@@ -1,4 +1,4 @@
-import fontFaceOverrides from './fontface';
+import fontFaceOverrides from 'theme/fontface';
 
 const baseFontSize = 16;
 const fontWeightRegular = 400;
