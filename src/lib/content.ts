@@ -1,7 +1,9 @@
 const { REACT_APP_CDA_TOKEN, REACT_APP_SPACE_ID } = process.env;
 const gqlEndpoint = `https://graphql.contentful.com/content/v1/spaces/${REACT_APP_SPACE_ID}/`;
 
-import { homeQuery, listQuery, recipeQuery, taxonomyQuery } from 'lib/queries';
+import { homeQuery, listQuery, recipeQuery } from 'lib/queries';
+
+// import { Taxonomy } from 'schema';
 
 type GetContentProps = {
   query: string;
@@ -53,14 +55,16 @@ const getHomeRecipes = async () => {
   return recipeCollection.items;
 };
 
-type GetTaxonomyProps = {
-  taxonomy: string;
-};
+// type GetTaxonomyProps = {
+//   taxonomy: string;
+// };
 
-const getTaxonomy = async ({ taxonomy }: GetTaxonomyProps) => {
-  const query = taxonomyQuery({ taxonomy });
-  const { taxonomyCollection } = await getContent({ query });
-  return taxonomyCollection.items[0].childrenCollection.items;
-};
+// const getTaxonomy = async ({
+//   taxonomy,
+// }: GetTaxonomyProps): Promise<Taxonomy> => {
+//   const query = taxonomyQuery({ taxonomy });
+//   const { taxonomyCollection } = await getContent({ query });
+//   return taxonomyCollection.items[0] as Taxonomy;
+// };
 
-export { getHomeRecipes, getRecipe, getRecipes, getTaxonomy };
+export { getHomeRecipes, getRecipe, getRecipes };

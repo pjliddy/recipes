@@ -13,23 +13,31 @@ import CategoryListItemButton from 'components/NavBar/NavMenu/CategoryListItemBu
 
 import { SxProps, Theme } from '@mui/material';
 
-import { Maybe, Tag, Taxonomy, TaxonomyChildrenItem } from 'schema';
+import { Maybe, Tag, TaxonomyChildrenItem } from 'schema';
 
 type SubcategoryMenuProps = {
-  taxonomy: Maybe<Taxonomy>;
+  category: Maybe<TaxonomyChildrenItem>;
   itemStyle: SxProps<Theme> | undefined;
   onClick: VoidFunction;
 };
 
 const SubcategoryMenu = ({
-  taxonomy,
+  category,
   itemStyle,
   onClick,
 }: SubcategoryMenuProps) => {
   const [open, setOpen] = useState(false);
+  const { slug, title } = category ?? {};
 
-  const { childrenCollection, slug, title, tag } = taxonomy ?? {};
-  const { linkedFrom } = tag ?? {};
+  const categoryTag =
+    category && 'tag' in category ? category.tag : (category as Tag);
+
+  const categoryChildrenCollection =
+    category && 'childrenCollection' in category
+      ? category.childrenCollection
+      : undefined;
+
+  const { linkedFrom } = categoryTag ?? {};
   const { recipeCollection } = linkedFrom ?? {};
   const { total } = recipeCollection ?? {};
 
@@ -56,7 +64,7 @@ const SubcategoryMenu = ({
       </ListItem>
       <Collapse in={open} timeout="auto">
         <List component="div" disablePadding>
-          {childrenCollection?.items.map(
+          {categoryChildrenCollection?.items.map(
             (child: Maybe<TaxonomyChildrenItem>) => {
               const { slug, title, sys } = child ?? {};
               const { id } = sys ?? {};

@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
@@ -12,8 +12,8 @@ import ScrollToTop from 'components/ScrollToTop';
 
 import theme from 'theme';
 
-import { Maybe, Taxonomy } from 'schema';
-import { getTaxonomy } from 'lib/content';
+// import { Maybe, Taxonomy } from 'schema';
+// import { getTaxonomy } from 'lib/content';
 
 // lazy load view components and assign webpack chunk names
 const NavBar = lazy(
@@ -21,28 +21,26 @@ const NavBar = lazy(
 );
 
 const { REACT_APP_CDA_TOKEN, REACT_APP_SPACE_ID } = process.env;
-const taxonomy = 'categories';
+// const taxonomy = 'categories';
 const renderFallback = () => <Loading />;
 
 const client = new ApolloClient({
-  name: 'contentful',
   uri: `https://graphql.contentful.com/content/v1/spaces/${REACT_APP_SPACE_ID}/`,
   cache: new InMemoryCache(),
+  ssrMode: true,
   headers: {
     authorization: `Bearer ${REACT_APP_CDA_TOKEN}`,
   },
 });
 
-// console.log({ client });
-
 const App = () => {
-  const [nav, setNav] = useState<Array<Maybe<Taxonomy>> | undefined>();
+  // const [nav, setNav] = useState<Maybe<Taxonomy> | undefined>();
 
-  useEffect(() => {
-    getTaxonomy({ taxonomy }).then((categories: Taxonomy[]) =>
-      setNav(categories)
-    );
-  }, []);
+  // useEffect(() => {
+  //   getTaxonomy({ taxonomy }).then((categories: Taxonomy) =>
+  //     setNav(categories)
+  //   );
+  // }, []);
 
   return (
     <ApolloProvider client={client}>
@@ -51,7 +49,7 @@ const App = () => {
         <BrowserRouter>
           <Suspense fallback={renderFallback()}>
             <ScrollToTop />
-            <NavBar nav={nav} />
+            <NavBar />
             <AppRoutes />
           </Suspense>
         </BrowserRouter>

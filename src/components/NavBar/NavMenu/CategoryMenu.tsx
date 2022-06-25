@@ -4,7 +4,12 @@ import ListItem from '@mui/material/ListItem';
 import CategoryListItemButton from 'components/NavBar/NavMenu/CategoryListItemButton';
 import SubcategoryMenu from 'components/NavBar/NavMenu/SubcategoryMenu';
 
-import { Maybe, TagLinkingCollections, Taxonomy } from 'schema';
+import {
+  Maybe,
+  Tag,
+  TagLinkingCollections,
+  TaxonomyChildrenItem,
+} from 'schema';
 
 const styles = {
   category: {
@@ -13,26 +18,34 @@ const styles = {
 };
 
 type CategoryMenuProps = {
-  node: Maybe<Taxonomy>;
+  category: Maybe<TaxonomyChildrenItem>;
   onClick: VoidFunction;
 };
 
-const CategoryMenu = ({ node, onClick }: CategoryMenuProps) => {
-  const { childrenCollection, slug, tag, title } = node ?? {};
+const CategoryMenu = ({ category, onClick }: CategoryMenuProps) => {
+  const { slug, title } = category ?? {};
 
-  const { linkedFrom: tagLinks } = tag ?? {};
-  const { linkedFrom } = node ?? {};
-  const nodeLinks = linkedFrom as Maybe<TagLinkingCollections>;
+  const categoryTag =
+    category && 'tag' in category ? category.tag : (category as Tag);
+
+  const categoryChildrenCollection =
+    category && 'childrenCollection' in category
+      ? category.childrenCollection
+      : undefined;
+
+  const { linkedFrom: tagLinks } = categoryTag ?? {};
+  const { linkedFrom } = category ?? {};
+  const categoryLinks = linkedFrom as Maybe<TagLinkingCollections>;
 
   const recipeCollection =
-    tagLinks?.recipeCollection || nodeLinks?.recipeCollection;
+    tagLinks?.recipeCollection || categoryLinks?.recipeCollection;
 
   const numRecipes = recipeCollection?.total;
   return (
     <Box>
-      {childrenCollection ? (
+      {categoryChildrenCollection ? (
         <SubcategoryMenu
-          taxonomy={node}
+          category={category}
           itemStyle={styles.category}
           onClick={onClick}
         />

@@ -23,11 +23,14 @@ const styles = {
 
 type NavMenuType = {
   isOpen: boolean;
-  nav: Maybe<Taxonomy>[];
+  nav: Maybe<Taxonomy>;
   onClick: VoidFunction;
 };
 
 const NavMenu = ({ isOpen, nav, onClick }: NavMenuType) => {
+  const { childrenCollection } = nav ?? {};
+  const { items: categories } = childrenCollection ?? {};
+
   return (
     <Drawer
       anchor="right"
@@ -48,16 +51,22 @@ const NavMenu = ({ isOpen, nav, onClick }: NavMenuType) => {
 
         <Divider />
 
-        {nav?.map((node: Maybe<Taxonomy>) => {
-          const categoryTag = (node?.tag || node) as Tag;
-          const { linkedFrom } = categoryTag ?? {};
-          const { recipeCollection } = linkedFrom ?? {};
-          const { total: numRecipes } = recipeCollection ?? {};
+        {categories &&
+          categories.map((category) => {
+            const categoryTag =
+              category && 'tag' in category ? category.tag : (category as Tag);
+            const { linkedFrom } = categoryTag ?? {};
+            const { recipeCollection } = linkedFrom ?? {};
+            const { total: numRecipes } = recipeCollection ?? {};
 
-          return numRecipes ? (
-            <CategoryMenu key={node?.sys?.id} node={node} onClick={onClick} />
-          ) : null;
-        })}
+            return numRecipes ? (
+              <CategoryMenu
+                key={category?.sys?.id}
+                category={category}
+                onClick={onClick}
+              />
+            ) : null;
+          })}
       </List>
     </Drawer>
   );
