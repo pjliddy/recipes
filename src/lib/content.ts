@@ -3,8 +3,6 @@ const gqlEndpoint = `https://graphql.contentful.com/content/v1/spaces/${REACT_AP
 
 import { homeQuery, listQuery, recipeQuery } from 'lib/queries';
 
-// import { Taxonomy } from 'schema';
-
 type GetContentProps = {
   query: string;
 };
@@ -54,17 +52,5 @@ const getHomeRecipes = async () => {
   const { recipeCollection } = await getContent({ query });
   return recipeCollection.items;
 };
-
-// type GetTaxonomyProps = {
-//   taxonomy: string;
-// };
-
-// const getTaxonomy = async ({
-//   taxonomy,
-// }: GetTaxonomyProps): Promise<Taxonomy> => {
-//   const query = taxonomyQuery({ taxonomy });
-//   const { taxonomyCollection } = await getContent({ query });
-//   return taxonomyCollection.items[0] as Taxonomy;
-// };
 
 export { getHomeRecipes, getRecipe, getRecipes };
