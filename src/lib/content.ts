@@ -1,5 +1,5 @@
-import { print, DocumentNode } from 'graphql';
-
+import { DocumentNode } from 'graphql/language/ast';
+import { print } from 'graphql';
 const { REACT_APP_CDA_TOKEN, REACT_APP_SPACE_ID } = process.env;
 const gqlEndpoint = `https://graphql.contentful.com/content/v1/spaces/${REACT_APP_SPACE_ID}/`;
 
