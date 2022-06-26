@@ -457,10 +457,19 @@ export type IngredientSectionFilter = {
 export type IngredientSectionLinkingCollections = {
   __typename?: 'IngredientSectionLinkingCollections';
   entryCollection?: Maybe<EntryCollection>;
+  recipeCollection?: Maybe<RecipeCollection>;
 };
 
 
 export type IngredientSectionLinkingCollectionsEntryCollectionArgs = {
+  limit?: InputMaybe<Scalars['Int']>;
+  locale?: InputMaybe<Scalars['String']>;
+  preview?: InputMaybe<Scalars['Boolean']>;
+  skip?: InputMaybe<Scalars['Int']>;
+};
+
+
+export type IngredientSectionLinkingCollectionsRecipeCollectionArgs = {
   limit?: InputMaybe<Scalars['Int']>;
   locale?: InputMaybe<Scalars['String']>;
   preview?: InputMaybe<Scalars['Boolean']>;
@@ -906,7 +915,7 @@ export type RecipeFilter = {
 
 export type RecipeIngredientsCollection = {
   __typename?: 'RecipeIngredientsCollection';
-  items: Array<Maybe<Entry>>;
+  items: Array<Maybe<IngredientSection>>;
   limit: Scalars['Int'];
   skip: Scalars['Int'];
   total: Scalars['Int'];

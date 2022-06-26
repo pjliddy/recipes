@@ -3,9 +3,14 @@ import { print, DocumentNode } from 'graphql';
 const { REACT_APP_CDA_TOKEN, REACT_APP_SPACE_ID } = process.env;
 const gqlEndpoint = `https://graphql.contentful.com/content/v1/spaces/${REACT_APP_SPACE_ID}/`;
 
+type VariablesType = {
+  slug?: string;
+  tag?: string;
+};
+
 type GetContentProps = {
   query: DocumentNode;
-  variables?: Record<string, string>;
+  variables?: VariablesType;
 };
 
 // NOTE: query is Document node, needs to be run as gql function & pass as string

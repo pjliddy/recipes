@@ -12,6 +12,7 @@ const ListPage = lazy(
 const RecipePage = lazy(
   () => import(/* webpackChunkName: 'recipepage' */ 'pages/RecipePage')
 );
+
 const AppRoutes = () => {
   return (
     <Routes>

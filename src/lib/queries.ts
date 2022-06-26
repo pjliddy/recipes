@@ -1,4 +1,5 @@
-import { gql } from '@urql/core';
+// import { gql } from '@urql/core';
+import gql from 'graphql-tag';
 
 /*
   Fragments wiht default fields for:
