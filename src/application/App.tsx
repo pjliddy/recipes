@@ -1,8 +1,6 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-
+import { createClient, Provider } from 'urql';
 import { ThemeProvider } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -11,38 +9,58 @@ import Loading from 'components/Loading';
 import ScrollToTop from 'components/ScrollToTop';
 
 import theme from 'theme';
+import { getContent } from 'lib/content';
+import { taxonomyQuery } from 'lib/queries';
+
+import { Maybe, Taxonomy, TaxonomyCollection } from 'schema';
 
 // lazy load view components and assign webpack chunk names
 const NavBar = lazy(
   () => import(/* webpackChunkName: 'navbar' */ 'components/NavBar/NavBar')
 );
 
-const { REACT_APP_CDA_TOKEN, REACT_APP_SPACE_ID } = process.env;
-// const taxonomy = 'categories';
 const renderFallback = () => <Loading />;
 
-const client = new ApolloClient({
-  uri: `https://graphql.contentful.com/content/v1/spaces/${REACT_APP_SPACE_ID}/`,
-  cache: new InMemoryCache(),
-  ssrMode: true,
-  headers: {
-    authorization: `Bearer ${REACT_APP_CDA_TOKEN}`,
+const { REACT_APP_CDA_TOKEN, REACT_APP_SPACE_ID } = process.env;
+
+const client = createClient({
+  url: `https://graphql.contentful.com/content/v1/spaces/${REACT_APP_SPACE_ID}/`,
+  fetchOptions: {
+    headers: { authorization: `Bearer ${REACT_APP_CDA_TOKEN}` },
   },
+  requestPolicy: 'cache-and-network',
 });
 
-const App = () => (
-  <ApolloProvider client={client}>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <ScrollToTop />
-        <NavBar />
-        <Suspense fallback={renderFallback()}>
-          <AppRoutes />
-        </Suspense>
-      </BrowserRouter>
-    </ThemeProvider>
-  </ApolloProvider>
-);
+const TAXONOMY = 'categories';
+
+const App = () => {
+  const [nav, setNav] = useState<Maybe<Taxonomy>>();
+  const variables = { slug: TAXONOMY };
+
+  useEffect(() => {
+    getContent({ query: taxonomyQuery, variables }).then(
+      ({ taxonomyCollection }: { taxonomyCollection: TaxonomyCollection }) => {
+        setNav(taxonomyCollection?.items?.[0]);
+      }
+    );
+  }, []);
+
+  if (!nav) return <Loading />;
+
+  return (
+    <Provider value={client}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <NavBar nav={nav} />
+          <ScrollToTop />
+          <Suspense fallback={renderFallback()}>
+            <AppRoutes />
+          </Suspense>
+        </BrowserRouter>
+      </ThemeProvider>
+    </Provider>
+  );
+};
 
 export default App;

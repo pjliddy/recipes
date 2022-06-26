@@ -1,8 +1,7 @@
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, ApolloError } from '@apollo/client';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
-
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
@@ -15,14 +14,13 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import Equipment from 'components/Recipe/Equipment';
 import Ingredients from 'components/Recipe/Ingredients';
 import Instructions from 'components/Recipe/Instructions';
+import Loading from 'components/Loading';
 import Notes from 'components/Recipe/Notes';
 import Tags from 'components/Recipe/Tags';
 
-import Loading from 'components/Loading';
-
-import { RecipeCollection } from 'schema';
-
+import { getContent } from 'lib/content';
 import { recipeQuery } from 'lib/queries';
+import { Recipe } from 'schema';
 
 import theme from 'theme';
 
@@ -41,14 +39,6 @@ const imgSizes = {
   },
 };
 
-type QueryProps = {
-  loading: boolean;
-  error?: ApolloError | undefined;
-  data?: {
-    recipeCollection: RecipeCollection;
-  };
-};
-
 const RecipePage = () => {
   const { slug } = useParams() ?? {};
 
@@ -57,14 +47,17 @@ const RecipePage = () => {
   const size = isMd ? 'md' : isSm ? 'sm' : 'xs';
 
   if (!slug) return null;
-  const { loading, error, data }: QueryProps = useQuery(recipeQuery, {
-    variables: { slug },
-  });
 
-  if (loading) return <Loading />;
-  if (error) console.error(error);
+  const [recipe, setRecipe] = useState<Recipe>();
 
-  const recipe = data?.recipeCollection?.items?.[0];
+  useEffect(() => {
+    const variables = { slug };
+    getContent({ query: recipeQuery, variables }).then((res) =>
+      setRecipe(res?.recipeCollection?.items?.[0])
+    );
+  }, [slug]);
+
+  if (!recipe) return <Loading />;
 
   const {
     title,

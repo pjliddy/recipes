@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from '@urql/core';
 
 /*
   Fragments wiht default fields for:

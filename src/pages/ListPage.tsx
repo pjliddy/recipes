@@ -1,5 +1,5 @@
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery, ApolloError } from '@apollo/client';
 
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -7,9 +7,9 @@ import Typography from '@mui/material/Typography';
 import Loading from 'components/Loading';
 import RecipeGrid from 'components/RecipeList/RecipeGrid';
 
-import { TagCollection, Recipe } from 'schema';
-
+import { getContent } from 'lib/content';
 import { listpageQuery } from 'lib/queries';
+import { Recipe } from 'schema';
 
 const styles = {
   title: {
@@ -17,32 +17,30 @@ const styles = {
   },
 };
 
-type QueryProps = {
-  loading: boolean;
-  error?: ApolloError | undefined;
-  data?: {
-    tagCollection: TagCollection;
-  };
-};
-
 const ListPage = () => {
   const { tag } = useParams() ?? {};
 
   if (!tag) return null;
 
-  const { loading, error, data }: QueryProps = useQuery(listpageQuery, {
-    variables: { tag },
-  });
+  const [recipes, setRecipes] = useState<Recipe[]>();
 
-  if (loading) return <Loading />;
-  if (error) console.error(error);
+  useEffect(() => {
+    const variables = { tag };
+    getContent({ query: listpageQuery, variables }).then(
+      ({ tagCollection }) => {
+        const recipeList =
+          tagCollection?.items?.[0]?.linkedFrom?.recipeCollection?.items;
 
-  const recipeItems =
-    data?.tagCollection?.items?.[0]?.linkedFrom?.recipeCollection?.items;
+        const sorted = [...(recipeList as Recipe[])].sort((a, b) =>
+          (a?.title as string) > (b?.title as string) ? 1 : -1
+        );
 
-  const recipes = [...(recipeItems as Recipe[])].sort((a, b) =>
-    (a?.title as string) > (b?.title as string) ? 1 : -1
-  );
+        setRecipes(sorted);
+      }
+    );
+  }, [tag]);
+
+  if (!recipes) return <Loading />;
 
   return (
     <Container className="main" component="main">

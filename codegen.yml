@@ -8,4 +8,4 @@ generates:
   src/schema.ts:
     plugins:
       - typescript
-      # - typescript-operations
+      - typescript-operations
