@@ -1,4 +1,5 @@
 import { ThemeOptions } from '@mui/material/styles';
+import colors from 'theme/colors';
 
 // TODO: differentiate between nav list and recipe lists
 // recipe lists introduce .25rem margin left, not wanted in nav
@@ -29,7 +30,7 @@ const listTheme: ThemeOptions = {
               marginRight: '.5rem',
               minWidth: 0,
               '& .MuiAvatar-root': {
-                backgroundColor: '#004802',
+                backgroundColor: colors.primary.main,
                 fontSize: '.8rem',
                 fontWeight: '600',
                 height: '1.5rem',

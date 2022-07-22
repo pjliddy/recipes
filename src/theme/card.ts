@@ -1,4 +1,5 @@
 import { ThemeOptions } from '@mui/material/styles';
+import colors from 'theme/colors';
 
 const cardTheme: ThemeOptions = {
   components: {
@@ -15,7 +16,7 @@ const cardTheme: ThemeOptions = {
           },
           '& .MuiCardHeader': {
             '&-root': {
-              backgroundColor: '#004802',
+              backgroundColor: colors.primary.main,
               color: '#fff',
               display: 'flex',
               width: '100%',
@@ -25,7 +26,7 @@ const cardTheme: ThemeOptions = {
               flexDirection: 'column-reverse',
             },
             '&-subheader': {
-              color: '#fff',
+              color: colors.common.white,
             },
           },
           '& .MuiCardContent-root': {

@@ -1,15 +1,15 @@
 import { ThemeOptions } from '@mui/material/styles';
-
+import colors from 'theme/colors';
 const baseTheme: ThemeOptions = {
   palette: {
     primary: {
-      main: '#004802',
+      main: colors.primary.main,
     },
     secondary: {
-      main: '#dc9302',
+      main: colors.secondary.main,
     },
     error: {
-      main: '#cb2314',
+      main: colors.error.main,
     },
   },
   typography: {
