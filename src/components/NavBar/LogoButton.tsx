@@ -1,11 +1,14 @@
 import { Link } from 'react-router-dom';
 
 import Button from '@mui/material/Button';
-import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
+
+import colors from 'theme/colors';
+
+import LogoIcon from 'assets/LogoIcon';
 
 const styles = {
   logo: {
-    color: '#fff',
+    color: colors.common.white,
     display: 'flex',
     marginRight: 'auto',
     textTransform: 'capitalize',
@@ -18,7 +21,7 @@ const LogoButton = () => {
       color="primary"
       component={Link}
       size="large"
-      startIcon={<CollectionsBookmarkIcon />}
+      startIcon={<LogoIcon />}
       sx={styles.logo}
       to="/"
     >
